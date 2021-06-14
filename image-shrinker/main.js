@@ -2,10 +2,14 @@ const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
-const sharp = require('sharp');
+const imagemin = require('imagemin');
+const imageminMozjpeg = require('imagemin-mozjpeg');
+const imageminPngquant = require('imagemin-pngquant');
 const byteSize = require('byte-size');
 const log = require('electron-log');
+const slash = require('slash');
 
+process.env.NODE_ENV = 'production';
 const isDev = process.env.NODE_ENV === 'development' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
 
@@ -95,35 +99,29 @@ app.on('window-all-closed', function () {
 });
 
 ipcMain.on('toMain', async (event, args) => {
-	args.extension = path.extname(args.imagePath);
-	const outputDir = `${os.homedir()}/image-shrinker`;
-
-	args.destination = `${outputDir}/${path.basename(args.imagePath, args.extension)}-quality${
-		args.quality
-	}${args.extension}`;
+	args.imagePath = slash(args.imagePath);
+	args.extension = path.extname(slash(args.imagePath));
+	const outputDir = slash(`${os.homedir()}/image-shrinker`);
+	args.destination = outputDir;
 
 	if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
 
 	const compressedImage = await shrinkImage(args);
-
 	event.sender.send('fromMain', compressedImage);
 });
 
 const shrinkImage = async ({ imagePath, quality, destination, extension }) => {
 	try {
-		let compressedImage;
-		if (extension === '.png') {
-			compressedImage = await sharp(imagePath).png({ quality }).toFile(destination);
-		} else {
-			compressedImage = await sharp(imagePath).jpeg({ quality }).toFile(destination);
-		}
-		compressedImage.outputPath = destination;
-		compressedImage.size = `${byteSize(compressedImage.size)}`;
+		let [compressedImage] = await imagemin([imagePath], {
+			destination: destination,
+			plugins: [imageminPngquant({ quality: [quality, quality] }), imageminMozjpeg({ quality })],
+		});
+
+		compressedImage.outputPath = compressedImage.destinationPath;
+		compressedImage.size = `${byteSize(fs.statSync(compressedImage.destinationPath).size)}`;
 		compressedImage.quality = quality;
 
 		shell.openPath(destination);
-		log.info(compressedImage);
-
 		return compressedImage;
 	} catch (err) {
 		log.error(err);

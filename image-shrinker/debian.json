@@ -1,0 +1,6 @@
+{
+	"dest": "installers/",
+	"icon": "assets/icons/linux/icon.png",
+	"categories": ["Utility", "Image", "Resizer"],
+	"lintianOverrides": ["changelog-file-missing-in-native-package"]
+}
