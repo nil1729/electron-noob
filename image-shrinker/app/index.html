@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'" />
+		<title>Image Shrinker</title>
+		<link rel="stylesheet" href="./css/all.css" type="text/css" />
+		<link rel="stylesheet" href="./css/materialize.min.css" type="text/css" />
+		<link rel="stylesheet" href="./css/main.css" type="text/css" />
+	</head>
+	<body>
+		<div class="container center-align">
+			<h4 class="title"><i class="far fa-images"></i> Image Shrinker</h4>
+			<p>Choose an Image to resize</p>
+			<br />
+			<form action="#">
+				<div class="file-field input-field">
+					<div class="btn browse-btn waves-effect waves-light">
+						<span>browse</span>
+						<input
+							type="file"
+							accept="image/jpeg, image/png, image/jpg"
+							required
+							id="input-image"
+						/>
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text" placeholder="Upload image" />
+					</div>
+				</div>
+				<p>
+					<b>Quality:</b>
+					<span class="quality-info">The lower the quality, the smaller the file size</span>
+				</p>
+				<br />
+				<p class="range-field">
+					<input type="range" id="quality-percent" min="5" max="100" value="50" />
+				</p>
+				<br />
+				<button class="btn black waves-effect waves-light" type="submit" name="action">
+					resize
+					<i class="fas fa-compress-arrows-alt"></i>
+				</button>
+			</form>
+			<div class="output-info z-depth-1">
+				<div class="preloader-wrapper small active">
+					<div class="spinner-layer spinner-green-only">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+				</div>
+				<div></div>
+			</div>
+		</div>
+	</body>
+	<script src="./js/materialize.min.js" type="text/javascript" defer></script>
+	<script type="text/javascript">
+		const form = document.querySelector('form');
+		const outputInfo = document.querySelector('.output-info');
+
+		function resetOutput() {
+			M.Toast.dismissAll();
+			outputInfo.style.display = 'flex';
+			outputInfo.children[0].style.display = 'inline-block';
+			outputInfo.children[1].innerHTML = '<p>Resizing ...</p>';
+		}
+
+		form.addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			resetOutput();
+
+			const { path: imagePath } = document.querySelector('#input-image').files[0];
+			const quality = Number(document.querySelector('#quality-percent').value);
+
+			window['image:shrink'].send('toMain', { imagePath, quality });
+		});
+
+		window['image:shrink'].receive('fromMain', (imageDetails) => {
+			console.log(imageDetails);
+			outputInfo.children[0].style.display = 'none';
+
+			const { outputPath, size, quality } = imageDetails;
+
+			if (outputPath && size && quality) {
+				outputInfo.children[1].innerHTML = `
+                            <p>
+                                <b>Output Path: </b>
+                                <span class="path-info" id="path-info">${outputPath}</span>
+                            </p>
+                            <p>
+                                <b>Compressed Size: </b>
+                                <span class="path-info" id="path-info">${size}</span>
+                            </p>
+                        `;
+				const toastHTML = `<span>Image compressed to ${quality}% quality</span>`;
+				M.toast({ html: toastHTML });
+			} else {
+				outputInfo.children[1].innerHTML = `
+                        <p>
+                            <b>Something went wrong!</b>
+                        </p>
+                    `;
+			}
+		});
+	</script>
+</html>

@@ -1,19 +1,27 @@
 {
-  "name": "image-shrinker",
-  "version": "1.0.0",
-  "description": "App to shrink the image size",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "nil1729",
-    "electron"
-  ],
-  "author": "Nilanjan Deb",
-  "license": "MIT",
-  "devDependencies": {
-    "electron": "^13.1.2",
-    "nodemon": "^2.0.7"
-  }
+	"name": "image-shrinker",
+	"version": "1.0.0",
+	"description": "App to shrink the image size",
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "NODE_ENV=development electron .",
+		"dev": "nodemon --exec npm start"
+	},
+	"keywords": [
+		"nil1729",
+		"electron"
+	],
+	"author": "Nilanjan Deb",
+	"license": "MIT",
+	"devDependencies": {
+		"electron": "^13.1.2",
+		"nodemon": "^2.0.7"
+	},
+	"dependencies": {
+		"byte-size": "^7.0.1",
+		"electron-log": "^4.3.5",
+		"sharp": "^0.28.3",
+		"slash": "^4.0.0"
+	}
 }

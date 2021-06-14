@@ -1,0 +1,96 @@
+@font-face {
+	font-family: 'Roboto-Medium';
+	src: url(../webfonts/Roboto/Roboto-Medium.ttf);
+}
+
+@font-face {
+	font-family: 'Roboto-Regular';
+	src: url(../webfonts/Roboto/Roboto-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'Roboto-Italic';
+	src: url(../webfonts/Roboto/Roboto-Italic.ttf);
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	border: 0;
+}
+body,
+button,
+input {
+	font-family: 'Roboto-Regular';
+}
+
+h4.title {
+	font-family: 'Roboto-Medium';
+}
+
+form .file-field .browse-btn {
+	float: none;
+	display: block;
+}
+
+form .file-field .file-path-wrapper .file-path {
+	text-align: center;
+	font-size: 15px;
+}
+
+form p span.quality-info {
+	font-family: 'Roboto-Italic';
+	color: #575353;
+}
+
+form button[type='submit'] {
+	display: block;
+	width: 100%;
+}
+form button[type='submit'] i {
+	margin-left: 10px;
+}
+.output-info {
+	margin-top: 35px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 50px;
+	display: none;
+	text-align: left;
+	padding: 7px;
+}
+
+.output-info p {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.output-info p b {
+	white-space: pre;
+}
+
+.output-info p span.path-info {
+	margin-left: 5px;
+}
+
+.output-info .preloader-wrapper {
+	margin-right: 10px;
+}
+
+.container.about .row {
+	height: 225px;
+	margin-top: 20px;
+}
+
+.container.about .row h5.title {
+	font-family: 'Roboto-Medium';
+}
+.container.about .row .col.s12 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100%;
+}
