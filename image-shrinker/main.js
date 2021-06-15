@@ -9,7 +9,7 @@ const byteSize = require('byte-size');
 const log = require('electron-log');
 const slash = require('slash');
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'productions';
 const isDev = process.env.NODE_ENV === 'development' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
 
@@ -113,17 +113,22 @@ ipcMain.on('toMain', async (event, args) => {
 const shrinkImage = async ({ imagePath, quality, destination, extension }) => {
 	try {
 		let [compressedImage] = await imagemin([imagePath], {
-			destination: destination,
-			plugins: [imageminPngquant({ quality: [quality, quality] }), imageminMozjpeg({ quality })],
+			destination,
+			glob: false,
+			plugins: [
+				imageminPngquant({ quality: [quality / 100, quality / 100] }),
+				imageminMozjpeg({ quality }),
+			],
 		});
 
 		compressedImage.outputPath = compressedImage.destinationPath;
 		compressedImage.size = `${byteSize(fs.statSync(compressedImage.destinationPath).size)}`;
 		compressedImage.quality = quality;
 
-		shell.openPath(destination);
+		shell.openPath(compressedImage.destinationPath);
 		return compressedImage;
 	} catch (err) {
+		console.log(err);
 		log.error(err);
 		return err;
 	}
