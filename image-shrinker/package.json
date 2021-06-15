@@ -8,8 +8,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "electron .",
 		"dev": "nodemon --exec npm start",
-		"package-linux": "electron-packager . image-shrinker --overwrite --platform=linux --arch=x64 --icon=assets/icons/linux/icon.png --prune=true",
-		"create-debian-installer": "electron-installer-debian --src image-shrinker-linux-x64/ --arch amd64 --config debian.json"
+		"package-linux": "electron-packager . image-shrinker --overwrite --platform=linux --arch=x64 --icon=assets/icons/linux/icon.png --prune=true"
 	},
 	"keywords": [
 		"nil1729",
