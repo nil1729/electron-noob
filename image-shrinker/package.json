@@ -1,13 +1,14 @@
 {
 	"name": "image-shrinker",
+	"productName": "ImageShrinker",
 	"version": "1.0.0",
 	"description": "App to shrink the image size",
 	"main": "main.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "NODE_ENV=development electron .",
+		"start": "electron .",
 		"dev": "nodemon --exec npm start",
-		"start:prod": "NODE_ENV=production electron ."
+		"package-linux": "electron-packager . image-shrinker --overwrite --platform=linux --arch=x64 --icon=assets/icons/linux/icon.png --prune=true"
 	},
 	"keywords": [
 		"nil1729",
@@ -24,7 +25,9 @@
 	"dependencies": {
 		"byte-size": "^7.0.1",
 		"electron-log": "^4.3.5",
-		"sharp": "^0.28.3",
-		"slash": "^4.0.0"
+		"imagemin": "^7.0.1",
+		"imagemin-mozjpeg": "^8.0.0",
+		"imagemin-pngquant": "^8.0.0",
+		"slash": "^3.0.0"
 	}
 }

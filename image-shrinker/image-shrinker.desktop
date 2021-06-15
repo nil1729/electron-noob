@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Image Shrinker
+Comment=App to compress images.
+Exec=/{BUILD_DIRECTORY}/image-shrinker-linux-x64/image-shrinker -ui
+Path=/{BUILD_DIRECTORY}/image-shrinker-linux-x64
+Icon=/{BUILD_DIRECTORY}/image-shrinker-linux-x64/resources/app/assets/icons/linux/icon.png
+Terminal=false
+Type=Application
+StartupWMClass=ImageShrinker
+Categories=Utility;Development;
