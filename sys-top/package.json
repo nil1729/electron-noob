@@ -1,0 +1,36 @@
+{
+	"name": "sys-top",
+	"productName": "SysTop",
+	"version": "1.0.0",
+	"description": "Monitoring CPU usage and overloading performance",
+	"main": "main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "electron .",
+		"dev": "nodemon --exec npm start",
+		"package-linux": "electron-packager . sys-top --overwrite --platform=linux --arch=x64 --icon=assets/icons/linux/icon.png",
+		"package-windows": "electron-packager . sys-top --overwrite --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --version-string.CompanyName=ND --version-string.FileDescription=ND --version-string.ProductName=\"Sys Top\"",
+		"dist": "electron-builder build"
+	},
+	"keywords": [
+		"nil1729",
+		"electron"
+	],
+	"author": "Nilanjan Deb",
+	"license": "MIT",
+	"devDependencies": {
+		"electron": "^13.1.2",
+		"electron-builder": "^22.11.7",
+		"electron-packager": "^15.2.0",
+		"nodemon": "^2.0.7"
+	},
+	"dependencies": {},
+	"build": {
+		"appId": "systop.nilanjandeb.me",
+		"asar": false,
+		"win": {
+			"target": "nsis",
+			"icon": "build/icon.ico"
+		}
+	}
+}
