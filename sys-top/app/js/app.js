@@ -1,25 +1,11 @@
-const tabs = document.querySelectorAll('nav ul li.tab');
-const tabContents = document.querySelectorAll('main .content');
-const inputs = document.querySelectorAll('form input[type="number"]');
+const cpuModel = document.querySelector('#cpu-model');
 
-const resetTab = () => tabs.forEach((tab) => tab.classList.remove('is-active'));
+window.onload = () => {
+	window['cpu:monitor'].send('system:info');
+};
 
-tabs.forEach(function (tab) {
-	tab.addEventListener('click', function () {
-		resetTab();
-		this.classList.add('is-active');
-		const currentTab = this.id;
-		tabContents.forEach(function (content) {
-			if (content.classList.contains(currentTab)) {
-				content.classList.add('is-active');
-			} else {
-				content.classList.remove('is-active');
-			}
-		});
+window['cpu:monitor'].receive('system:info', (info) => {
+	Object.keys(info).forEach((key) => {
+		document.querySelector('#' + key).textContent = info[key];
 	});
 });
-
-// function roundInput(e) {
-// 	e.value = Number(e.value).toFixed(2);
-// 	console.log(e.value);
-// }

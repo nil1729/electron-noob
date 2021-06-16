@@ -2,6 +2,11 @@ const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const osu = require('node-os-utils');
+const byteSize = require('byte-size');
+var moment = require('moment');
+var momentDurationFormatSetup = require('moment-duration-format');
+momentDurationFormatSetup(moment);
 
 process.env.NODE_ENV = 'development';
 const isDev = process.env.NODE_ENV === 'development' ? true : false;
@@ -49,7 +54,10 @@ app.on('ready', () => {
 	const mainMenu = Menu.buildFromTemplate(menu);
 	Menu.setApplicationMenu(mainMenu);
 
-	mainWindow.on('ready', () => (mainWindow = null));
+	mainWindow.on('ready', () => {
+		getSystemInfo();
+		mainWindow = null;
+	});
 });
 
 const menu = [
@@ -88,6 +96,17 @@ app.on('window-all-closed', function () {
 	if (!isMac) app.quit();
 });
 
-ipcMain.on('toMain', async (event, args) => {});
+const getSystemInfo = () => {
+	const systemUptime = moment.duration(os.uptime(), 'seconds').format('d[d], h[h], m[m], s[s]');
+	const cpuModel = osu.cpu.model();
+	const osInfo = `${os.type()}  ${os.arch()}`;
+	const machineName = os.hostname();
+	const systemMemory = `${byteSize(os.totalmem())}`;
+	return { cpuModel, osInfo, machineName, systemUptime, systemMemory };
+};
+
+ipcMain.on('system:info', async (event, args) => {
+	event.sender.send('system:info', getSystemInfo());
+});
 
 console.log(`Electron app started in ${process.env.NODE_ENV} mode`);

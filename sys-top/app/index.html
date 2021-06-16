@@ -30,6 +30,7 @@
 						</p>
 					</div>
 				</div>
+				<p id="cpuModel"></p>
 			</div>
 			<div class="content system-info">
 				<h1><i class="fas fa-info"></i> System Information</h1>
@@ -37,25 +38,25 @@
 					<div class="stat">
 						<p>
 							<strong>Computer Name: </strong>
-							<span>nil1729</span>
+							<span id="machineName"></span>
 						</p>
 					</div>
 					<div class="stat">
 						<p>
 							<strong> OS: </strong>
-							<span>win 32</span>
+							<span id="osInfo"></span>
 						</p>
 					</div>
 					<div class="stat">
 						<p>
 							<strong> System Uptime: </strong>
-							<span>17d, 18h, 8m, 15s</span>
+							<span id="systemUptime"></span>
 						</p>
 					</div>
 					<div class="stat">
 						<p>
 							<strong> System Memory: </strong>
-							<span>49152</span>
+							<span id="systemMemory"></span>
 						</p>
 					</div>
 				</div>
@@ -83,10 +84,6 @@
 			</ul>
 		</nav>
 	</body>
-	<script src="./js/app.js" type="text/javascript" defer></script>
-	<script type="text/javascript">
-		window['cpu:monitor'].send('toMain', {});
-
-		window['cpu:monitor'].receive('fromMain', () => {});
-	</script>
+	<script src="./js/tabs.js" type="text/javascript"></script>
+	<script src="./js/app.js" type="text/javascript"></script>
 </html>

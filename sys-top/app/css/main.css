@@ -125,6 +125,16 @@ main .content .stats .stat p strong {
 	margin-right: 2px;
 }
 
+main .content .stats .stat p span {
+	letter-spacing: 0.3px;
+}
+
+main .content.cpu #cpuModel {
+	margin-top: 20px;
+	font-family: 'Roboto-Medium';
+	text-align: center;
+}
+
 main .content .setting-form .input-group {
 	margin-bottom: 18px;
 }
