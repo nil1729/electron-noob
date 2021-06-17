@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, Notification } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, Notification, Tray } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -17,6 +17,7 @@ const isMac = process.platform === 'darwin' ? true : false;
 
 let mainWindow;
 let aboutWindow;
+let tray;
 
 // First instantiate the class
 const store = new Store({
@@ -35,6 +36,7 @@ const createMainWindow = () => {
 		icon: './assets/icons/icon.png',
 		resizable: false,
 		backgroundColor: '#000000',
+		opacity: 0.98,
 		webPreferences: {
 			devTools: isDev,
 			nodeIntegration: false, // is default value after Electron v5
@@ -78,6 +80,40 @@ app.on('ready', () => {
 	const mainMenu = Menu.buildFromTemplate(menu);
 	Menu.setApplicationMenu(mainMenu);
 
+	tray = new Tray('./assets/icons/tray_icon.png');
+	tray.setToolTip(APP_TITLE);
+
+	tray.on('click', () => {
+		if (mainWindow.isVisible()) {
+			mainWindow.hide();
+			aboutWindow.hide();
+		} else {
+			mainWindow.show();
+		}
+	});
+
+	tray.setContextMenu(
+		Menu.buildFromTemplate([
+			{
+				label: 'Quit',
+				click: () => {
+					app.isQuitting = true;
+					app.quit();
+				},
+			},
+		])
+	);
+
+	mainWindow.on('close', (e) => {
+		if (!app.isQuitting) {
+			e.preventDefault();
+			mainWindow.hide();
+			aboutWindow.hide();
+		}
+
+		return true;
+	});
+
 	mainWindow.on('ready', () => (mainWindow = null));
 });
 
@@ -92,6 +128,17 @@ const menu = [
 		: []),
 	{
 		role: 'fileMenu',
+	},
+	{
+		label: 'View',
+		submenu: [
+			{
+				label: 'Toggle Navigation Tools',
+				click: () => {
+					mainWindow.webContents.send('nav:toggle');
+				},
+			},
+		],
 	},
 	...(!isMac ? [{ label: 'Help', submenu: [{ label: 'About', click: createAboutWindow }] }] : []),
 	...(isDev

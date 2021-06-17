@@ -11,7 +11,7 @@ contextBridge.exposeInMainWorld('cpu:monitor', {
 		}
 	},
 	receive: (channel, func) => {
-		let validChannels = ['system:info', 'cpu:usage', 'version:info'];
+		let validChannels = ['system:info', 'cpu:usage', 'version:info', 'nav:toggle'];
 		if (validChannels.includes(channel)) {
 			// Deliberately strip event as it includes `sender`
 			ipcRenderer.on(channel, (event, ...args) => func(...args));

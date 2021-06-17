@@ -1,5 +1,6 @@
 const tabs = document.querySelectorAll('nav ul li.tab');
 const tabContents = document.querySelectorAll('main .content');
+const navTools = document.querySelector('nav');
 
 const resetTab = () => tabs.forEach((tab) => tab.classList.remove('is-active'));
 
@@ -16,4 +17,12 @@ tabs.forEach(function (tab) {
 			}
 		});
 	});
+});
+
+window['cpu:monitor'].receive('nav:toggle', (info) => {
+	if (navTools.classList.contains('hide')) {
+		navTools.classList.remove('hide');
+	} else {
+		navTools.classList.add('hide');
+	}
 });
