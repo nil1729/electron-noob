@@ -205,13 +205,13 @@ input[type='number'] {
 .app-about {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	height: 100%;
 }
 .app-about .title {
 	font-size: 25px;
-	margin-bottom: 20px;
+	margin: 20px auto;
 }
 .app-about .title i {
 	margin-right: 5px;

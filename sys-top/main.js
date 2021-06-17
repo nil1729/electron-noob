@@ -11,12 +11,11 @@ momentDurationFormatSetup(moment);
 const APP_TITLE = 'SysTop';
 const APP_VERSION = '1.0.0';
 
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'production';
 const isDev = process.env.NODE_ENV === 'development' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
 
 let mainWindow;
-let aboutWindow;
 let tray;
 
 // First instantiate the class
@@ -50,7 +49,7 @@ const createMainWindow = () => {
 };
 
 const createAboutWindow = () => {
-	aboutWindow = new BrowserWindow({
+	new BrowserWindow({
 		title: 'About ' + APP_TITLE,
 		width: 300,
 		height: 300,
@@ -64,13 +63,7 @@ const createAboutWindow = () => {
 			enableRemoteModule: false, // turn off remote
 			preload: path.join(__dirname, 'preload.js'), // use a preload script
 		},
-	});
-
-	aboutWindow.loadFile(`./app/about.html`);
-
-	aboutWindow.on('ready', () => {
-		aboutWindow = null;
-	});
+	}).loadFile(`./app/about.html`);
 };
 
 app.on('ready', () => {
@@ -86,7 +79,7 @@ app.on('ready', () => {
 	tray.on('click', () => {
 		if (mainWindow.isVisible()) {
 			mainWindow.hide();
-			aboutWindow.hide();
+			hideWindows();
 		} else {
 			mainWindow.show();
 		}
@@ -108,7 +101,7 @@ app.on('ready', () => {
 		if (!app.isQuitting) {
 			e.preventDefault();
 			mainWindow.hide();
-			aboutWindow.hide();
+			hideWindows();
 		}
 
 		return true;
@@ -116,6 +109,14 @@ app.on('ready', () => {
 
 	mainWindow.on('ready', () => (mainWindow = null));
 });
+
+const hideWindows = () => {
+	BrowserWindow.getAllWindows().forEach((win) => {
+		if (win.isVisible) {
+			win.hide();
+		}
+	});
+};
 
 const menu = [
 	...(isMac
