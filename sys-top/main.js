@@ -73,7 +73,7 @@ app.on('ready', () => {
 	const mainMenu = Menu.buildFromTemplate(menu);
 	Menu.setApplicationMenu(mainMenu);
 
-	tray = new Tray('./assets/icons/tray_icon.png');
+	tray = new Tray(path.join(__dirname, 'assets', 'icons', 'tray_icon.png'));
 	tray.setToolTip(APP_TITLE);
 
 	tray.on('click', () => {
@@ -233,7 +233,7 @@ const notifyUser = (usage, maxUsage) => {
 
 	new Notification({
 		title: 'CPU Overloaded',
-		icon: './assets/icons/icon.png',
+		icon: path.join(__dirname, 'assets', 'icons', 'icon.png'),
 		urgency: 'critical',
 		body: `Your CPU usage crossed maximum usage limit ${maxUsage}%. Current CPU usage is: ${usage}`,
 	}).show();

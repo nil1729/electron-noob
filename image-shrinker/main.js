@@ -9,7 +9,7 @@ const byteSize = require('byte-size');
 const log = require('electron-log');
 const slash = require('slash');
 
-process.env.NODE_ENV = 'productions';
+process.env.NODE_ENV = 'production';
 const isDev = process.env.NODE_ENV === 'development' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
 

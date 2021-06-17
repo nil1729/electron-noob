@@ -9,7 +9,8 @@
 		"start": "electron .",
 		"dev": "nodemon --exec npm start",
 		"package-linux": "electron-packager . image-shrinker --overwrite --platform=linux --arch=x64 --icon=assets/icons/linux/icon.png --prune=true",
-		"package-windows": "electron-packager . image-shrinker --overwrite --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --version-string.CompanyName=ND --version-string.FileDescription=ND --version-string.ProductName=\"Image Shrinker\""
+		"package-windows": "electron-packager . image-shrinker --overwrite --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --version-string.CompanyName=ND --version-string.FileDescription=ND --version-string.ProductName=\"Image Shrinker\"",
+		"dist": "electron-builder build"
 	},
 	"keywords": [
 		"nil1729",
@@ -19,6 +20,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"electron": "^13.1.2",
+		"electron-builder": "^22.11.7",
 		"electron-packager": "^15.2.0",
 		"nodemon": "^2.0.7"
 	},
@@ -29,5 +31,13 @@
 		"imagemin-mozjpeg": "^8.0.0",
 		"imagemin-pngquant": "^8.0.0",
 		"slash": "^3.0.0"
+	},
+	"build": {
+		"appId": "com.nilanjandeb.me",
+		"asar": false,
+		"win": {
+			"target": "nsis",
+			"icon": "build/icon.ico"
+		}
 	}
 }

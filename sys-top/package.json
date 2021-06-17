@@ -32,7 +32,6 @@
 	},
 	"build": {
 		"appId": "systop.nilanjandeb.me",
-		"asar": false,
 		"win": {
 			"target": "nsis",
 			"icon": "build/icon.ico"
