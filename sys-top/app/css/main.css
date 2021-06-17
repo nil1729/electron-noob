@@ -4,6 +4,8 @@
 	--background-color: rgb(0, 0, 0);
 	--secondary-background-color: rgba(27, 23, 23, 0.842);
 	--secondary-background-color-hover: rgba(8, 7, 7, 0.575);
+	--danger-color: rgb(209, 63, 63);
+	--alert-color: orange;
 }
 
 @font-face {
@@ -105,10 +107,13 @@ main .content.cpu .usage-bar {
 
 main .content.cpu .usage-bar .usage-indicator {
 	background-color: var(--primary-color);
-	width: 20%;
+	width: 0;
 	height: 99%;
 	border-radius: 10px;
 	transition: all 0.3s;
+}
+main .content.cpu .usage-bar .usage-indicator.overloaded {
+	background-color: var(--danger-color);
 }
 
 main .content .stats .stat {
@@ -151,6 +156,7 @@ main .content .setting-form .input-group input {
 	border: none;
 	padding: 0 7px;
 	font-size: 17px;
+	font-family: 'Roboto-Medium';
 }
 
 main .content .setting-form button {
@@ -171,4 +177,61 @@ input::-webkit-inner-spin-button {
 
 input[type='number'] {
 	-moz-appearance: textfield;
+}
+
+.alert {
+	width: 100%;
+	border: 2px solid;
+	border-bottom-color: grey;
+	border-left-color: grey;
+	border-top-color: var(--alert-color);
+	border-right-color: var(--alert-color);
+	padding: 8px;
+	margin: 0 auto 15px auto;
+	display: none;
+}
+
+.alert #alert-message {
+	text-align: center;
+	color: var(--alert-color);
+	font-size: 17px;
+	letter-spacing: 0.2px;
+}
+
+.alert.show {
+	display: block;
+}
+
+.app-about {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+.app-about .title {
+	font-size: 25px;
+	margin-bottom: 20px;
+}
+.app-about .title i {
+	margin-right: 5px;
+}
+
+.app-about h5.title {
+	font-weight: 300;
+}
+
+.app-about ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.app-about ul li {
+	padding: 2.2px 0;
+	text-align: center;
+}
+
+.app-about ul li span {
+	font-size: 18px;
 }

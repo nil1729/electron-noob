@@ -1,6 +1,5 @@
 const tabs = document.querySelectorAll('nav ul li.tab');
 const tabContents = document.querySelectorAll('main .content');
-const inputs = document.querySelectorAll('form input[type="number"]');
 
 const resetTab = () => tabs.forEach((tab) => tab.classList.remove('is-active'));
 

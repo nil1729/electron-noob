@@ -5,11 +5,29 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'" />
-		<title>About Image Shrinker</title>
+		<title>About SysTop</title>
 		<link rel="stylesheet" href="./css/all.css" type="text/css" />
 		<link rel="stylesheet" href="./css/main.css" type="text/css" />
 	</head>
 	<body>
-		<h1>SysTop</h1>
+		<div class="app-about">
+			<h5 class="title"><i class="fas fa-desktop"></i> SysTop</h5>
+			<ul>
+				<li>App Version: <span id="app"></span></li>
+				<li>Electron Version: <span id="electron"></span></li>
+				<li>NodeJS Version: <span id="node"></span></li>
+				<li>Chrome Version: <span id="chrome"></span></li>
+				<li>Developed By Nilanjan Deb</li>
+			</ul>
+		</div>
 	</body>
+	<script type="text/javascript">
+		window.onload = window['cpu:monitor'].send('version:info');
+		window['cpu:monitor'].receive('version:info', (info) => {
+			Object.keys(info).forEach((key) => {
+				if (document.querySelector('#' + key))
+					document.querySelector('#' + key).textContent = info[key];
+			});
+		});
+	</script>
 </html>

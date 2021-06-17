@@ -20,13 +20,13 @@
 					<div class="stat">
 						<p>
 							<strong>CPU Usage: </strong>
-							<span>14.56%</span>
+							<span id="cpuPercentage"></span>
 						</p>
 					</div>
 					<div class="stat">
 						<p>
 							<strong> CPU Free: </strong>
-							<span>85.44%</span>
+							<span id="freePercentage"></span>
 						</p>
 					</div>
 				</div>
@@ -63,14 +63,34 @@
 			</div>
 			<div class="content settings">
 				<h1><i class="fas fa-cog"></i> Settings</h1>
+				<div class="alert">
+					<p id="alert-message">Settings Saved</p>
+				</div>
 				<form class="setting-form">
 					<div class="input-group">
 						<label for="overload-percent">CPU Overloading Warning (%)</label>
-						<input type="number" min="1" max="100" step="any" placeholder="50" required />
+						<input
+							id="cpu-overload"
+							type="number"
+							min="1"
+							max="100"
+							step="any"
+							placeholder="Enter maximum CPU usage percentage*"
+							value="75"
+							required
+						/>
 					</div>
 					<div class="input-group">
 						<label for="alert-frequency">Alert Frequency (in Minutes)</label>
-						<input type="number" min="1" placeholder="5" step="any" required />
+						<input
+							id="alert-frequency"
+							placeholder="Enter alert interval limit*"
+							type="number"
+							min="1"
+							value="5"
+							step="any"
+							required
+						/>
 					</div>
 					<button type="submit">Save</button>
 				</form>

@@ -5,13 +5,13 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('cpu:monitor', {
 	send: (channel, data) => {
 		// whitelist channels
-		let validChannels = ['system:info'];
+		let validChannels = ['system:info', 'setting:form', 'version:info'];
 		if (validChannels.includes(channel)) {
 			ipcRenderer.send(channel, data);
 		}
 	},
 	receive: (channel, func) => {
-		let validChannels = ['system:info'];
+		let validChannels = ['system:info', 'cpu:usage', 'version:info'];
 		if (validChannels.includes(channel)) {
 			// Deliberately strip event as it includes `sender`
 			ipcRenderer.on(channel, (event, ...args) => func(...args));
