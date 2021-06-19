@@ -1,0 +1,91 @@
+{
+	"name": "bug-logger",
+	"productName": "bug-logger",
+	"version": "1.0.0",
+	"description": "Simple Bug tracker application using electron and React",
+	"main": ".webpack/main",
+	"scripts": {
+		"start": "electron-forge start --inspect-electron",
+		"package": "electron-forge package",
+		"make": "electron-forge make",
+		"publish": "electron-forge publish",
+		"lint": "echo \"No linting configured\""
+	},
+	"keywords": [],
+	"author": {
+		"name": "nil1729",
+		"email": "nilanjan172nsvian@gmail.com"
+	},
+	"license": "MIT",
+	"config": {
+		"forge": {
+			"packagerConfig": {},
+			"makers": [
+				{
+					"name": "@electron-forge/maker-squirrel",
+					"config": {
+						"name": "bug_logger"
+					}
+				},
+				{
+					"name": "@electron-forge/maker-zip",
+					"platforms": [
+						"darwin"
+					]
+				},
+				{
+					"name": "@electron-forge/maker-deb",
+					"config": {}
+				},
+				{
+					"name": "@electron-forge/maker-rpm",
+					"config": {}
+				}
+			],
+			"plugins": [
+				[
+					"@electron-forge/plugin-webpack",
+					{
+						"mainConfig": "./webpack.main.config.js",
+						"renderer": {
+							"config": "./webpack.renderer.config.js",
+							"entryPoints": [
+								{
+									"html": "./src/app/index.html",
+									"js": "./src/renderer.js",
+									"name": "main_window"
+								}
+							]
+						}
+					}
+				]
+			]
+		}
+	},
+	"devDependencies": {
+		"@babel/core": "^7.14.6",
+		"@babel/preset-react": "^7.14.5",
+		"@electron-forge/cli": "^6.0.0-beta.57",
+		"@electron-forge/maker-deb": "^6.0.0-beta.57",
+		"@electron-forge/maker-rpm": "^6.0.0-beta.57",
+		"@electron-forge/maker-squirrel": "^6.0.0-beta.57",
+		"@electron-forge/maker-zip": "^6.0.0-beta.57",
+		"@electron-forge/plugin-webpack": "^6.0.0-beta.57",
+		"@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+		"babel-loader": "^8.2.2",
+		"css-loader": "^5.2.6",
+		"electron": "13.1.2",
+		"node-loader": "^2.0.0",
+		"style-loader": "^2.0.0"
+	},
+	"dependencies": {
+		"bootstrap": "^4.6.0",
+		"electron-squirrel-startup": "^1.0.0",
+		"moment": "^2.29.1",
+		"mongodb-client-encryption": "^1.2.5",
+		"mongoose": "^5.12.14",
+		"react": "^17.0.2",
+		"react-bootstrap": "^1.6.1",
+		"react-dom": "^17.0.2"
+	}
+}
